@@ -1,0 +1,42 @@
+const express = require("express");
+const Project = require("../models/Project");
+
+const router = express.Router();
+
+router.post("/add", async (req,res)=>{
+
+try{
+
+const project = new Project(req.body);
+
+await project.save();
+
+res.json({message:"Project added successfully"});
+
+}
+catch(err){
+
+res.status(500).json(err);
+
+}
+
+});
+
+router.get("/", async (req,res)=>{
+
+try{
+
+const projects = await Project.find();
+
+res.json(projects);
+
+}
+catch(err){
+
+res.status(500).json(err);
+
+}
+
+});
+
+module.exports = router;
